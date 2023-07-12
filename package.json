@@ -1,0 +1,22 @@
+{
+  "name": "wwebjs-aws-s3",
+  "version": "1.0.0",
+  "description": "An AWS S3 plugin for remote authentication on whatsapp-web.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arbisyarifudin/wwebjs-aws-s3.git"
+  },
+  "keywords": [
+    "wwebjs",
+    "whatsapp-web.js",
+    "RemoteAuth",
+    "aws",
+    "s3"
+  ],
+  "author": "arbisyarifudin",
+  "license": "ISC"
+}
