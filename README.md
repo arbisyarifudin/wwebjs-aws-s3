@@ -1,7 +1,7 @@
 # wwebjs-aws-s3
 An AWS S3 plugin for whatsapp-web.js (used to "RemoteAuth").
 
-Use the AWS S3 protocol to keep your WhatsApp MultiDevice session on a AWS S3 server.
+Use the AWS S3 to keep your WhatsApp MultiDevice session on a AWS S3 server.
 
 ## Quick Links
 
@@ -15,14 +15,14 @@ The module is now available on npm! `npm i wwebjs-aws-s3`
 
 ## DEBUG mode
 
-To see detailed logs about object health, set the environment variable DEBUG to "true".
+To see detailed logs about object health, set the environment variable STORE_DEBUG to "true".
 
 ```bash
 # linux
-$ export DEBUG=true
+$ export STORE_DEBUG=true
 
 # windows
-$ SET DEBUG=true
+$ SET STORE_DEBUG=true
 ```
 
 ## Example usage
@@ -30,7 +30,7 @@ $ SET DEBUG=true
 ```js
 const { Client, RemoteAuth } = require('whatsapp-web.js');
 const { AwsS3Store } = require('wwebjs-aws-s3');
-const { S3Client, PutObjectCommand, HeadObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, HeadObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 
 const s3 = new S3Client({
@@ -43,6 +43,7 @@ const s3 = new S3Client({
 
 const putObjectCommand = PutObjectCommand; 
 const headObjectCommand = HeadObjectCommand;
+const getObjectCommand = GetObjectCommand;
 const deleteObjectCommand = DeleteObjectCommand; 
 
 const store = new AwsS3Store({
@@ -51,12 +52,15 @@ const store = new AwsS3Store({
   s3Client: s3,
   putObjectCommand,
   headObjectCommand,
+  getObjectCommand,
   deleteObjectCommand
 });
 
 
 const client = new Client({
     authStrategy: new RemoteAuth({
+        clientId: 'yourSessionName',
+        dataPath: './.wwebjs_auth',
         store: store,
         backupSyncIntervalMs: 600000
     })
