@@ -1,9 +1,7 @@
 # wwebjs-aws-s3
 A remote authentication plugin for [whatsapp-web.js](https://wwebjs.dev/). Use the AWS S3 to keep your WhatsApp MultiDevice session data safe and secure.
 
-![GitHub stars](https://img.shields.io/github/stars/arbisyarifudin/wwebjs-aws-s3.svg?style=social&label=Star&maxAge=2592000) ![GitHub license](https://img.shields.io/github/license/arbisyarifudin/wwebjs-aws-s3.svg)
-
-[![npm version](https://badge.fury.io/js/wwebjs-aws-s3.svg)](https://badge.fury.io/js/wwebjs-aws-s3)
+![GitHub license](https://img.shields.io/github/license/arbisyarifudin/wwebjs-aws-s3.svg) [![npm version](https://badge.fury.io/js/wwebjs-aws-s3.svg)](https://badge.fury.io/js/wwebjs-aws-s3)
 [![npm downloads](https://img.shields.io/npm/dm/wwebjs-aws-s3.svg)](https://npm-stat.com/charts.html?package=wwebjs-aws-s3)
 ![GitHub issues](https://img.shields.io/github/issues/arbisyarifudin/wwebjs-aws-s3.svg)
 
