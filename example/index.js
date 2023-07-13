@@ -32,7 +32,7 @@ const client = new Client({
         clientId: 'session-123',
         dataPath: './.wwebjs_auth',
         store: store,
-        backupSyncIntervalMs: 600000 // Interval untuk backup data ke server AWS S3 (default: 600000 ms / 60 detik)
+        backupSyncIntervalMs: 600000 // in milliseconds
     })
 });
 

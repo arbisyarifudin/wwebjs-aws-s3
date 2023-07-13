@@ -3,9 +3,9 @@ const fs = require('fs');
 
 class AwsS3Store {
   /**
+   * A class for storing authentication data of Whatsapp-web.js to AWS S3.
    * @example
-   * const s3 = new S3Client({ region: 'YOUR_AWS_REGION', credentials: { accessKeyId: 'YOUR_ACCESS_KEY', secretAccessKey: 'YOUR_SECRET_ACCESS_KEY' } });
-   * new AwsS3Store({ bucketName: 'example-bucket', remoteDataPath: 'example/remote/dir', s3Client: s3 })
+   * For example usage see `example/index.js`.
    * @param {Object} options Specifies the params pattern.
    * @param {String} options.bucketName Specifies the S3 bucket name.
    * @param {String} options.remoteDataPath Specifies the remote path to save authentication files.
@@ -143,4 +143,4 @@ class AwsS3Store {
   }
 }
 
-module.exports = { AwsS3Store };
+module.exports = AwsS3Store;
