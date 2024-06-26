@@ -1,6 +1,4 @@
-const { AwsS3Store } = require('../src/AwsS3Store');
-const { S3Client, PutObjectCommand, HeadObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
-
+const { AwsS3Store, S3Client } = require('../src/AwsS3Store');
 const { Client, RemoteAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
@@ -9,22 +7,16 @@ const s3 = new S3Client({
     credentials: {
         accessKeyId: 'AWS_ACCESS_KEY_ID',
         secretAccessKey: 'AWS_SECRET_ACCESS_KEY'
-    }
+    },
+    httpOptions: {
+        timeout: 600000, // 10 minutes <-- increase this value for large file uploads
+    },
 });
-
-const putObjectCommand = PutObjectCommand;
-const headObjectCommand = HeadObjectCommand;
-const getObjectCommand = GetObjectCommand;
-const deleteObjectCommand = DeleteObjectCommand;
 
 const store = new AwsS3Store({
     bucketName: 'example-bucket',
     remoteDataPath: 'example/dir',
-    s3Client: s3,
-    putObjectCommand,
-    headObjectCommand,
-    getObjectCommand,
-    deleteObjectCommand
+    s3Client: s3
 });
 
 const client = new Client({
@@ -32,7 +24,7 @@ const client = new Client({
         clientId: 'session-123',
         dataPath: './.wwebjs_auth',
         store: store,
-        backupSyncIntervalMs: 600000 // in milliseconds
+        backupSyncIntervalMs: 600000 // in milliseconds (10 minutes) <-- decrease this value if you want to test the backup feature
     })
 });
 
@@ -45,6 +37,8 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+
+    // trigger whatsapp client is started and ready
 });
 
 client.on('message', msg => {
@@ -53,4 +47,5 @@ client.on('message', msg => {
     }
 });
 
+// it will done early (so use event 'ready' listener to know when the whatsapp client is ready & started)
 client.initialize();

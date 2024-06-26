@@ -30,43 +30,36 @@ $ SET STORE_DEBUG=true
 ## Example usage
 
 ```js
+const { AwsS3Store, S3Client } = require('../src/AwsS3Store');
 const { Client, RemoteAuth } = require('whatsapp-web.js');
-const { AwsS3Store } = require('wwebjs-aws-s3');
-const { S3Client, PutObjectCommand, HeadObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
-
+const qrcode = require('qrcode-terminal');
 
 const s3 = new S3Client({
-  region: 'AWS_REGION',
-  credentials: {
-    accessKeyId: 'AWS_ACCESS_KEY_ID',
-    secretAccessKey: 'AWS_SECRET_ACCESS_KEY'
-  }
+    region: 'AWS_REGION',
+    credentials: {
+        accessKeyId: 'AWS_ACCESS_KEY_ID',
+        secretAccessKey: 'AWS_SECRET_ACCESS_KEY'
+    },
+    httpOptions: {
+        timeout: 600000, // 10 minutes <-- increase this value for large file uploads
+    },
 });
-
-const putObjectCommand = PutObjectCommand; 
-const headObjectCommand = HeadObjectCommand;
-const getObjectCommand = GetObjectCommand;
-const deleteObjectCommand = DeleteObjectCommand; 
 
 const store = new AwsS3Store({
-  bucketName: 'example-bucket',
-  remoteDataPath: 'example/path/',
-  s3Client: s3,
-  putObjectCommand,
-  headObjectCommand,
-  getObjectCommand,
-  deleteObjectCommand
+    bucketName: 'example-bucket',
+    remoteDataPath: 'example/dir',
+    s3Client: s3
 });
-
 
 const client = new Client({
     authStrategy: new RemoteAuth({
         clientId: 'yourSessionName',
         dataPath: './.wwebjs_auth',
         store: store,
-        backupSyncIntervalMs: 600000
+        backupSyncIntervalMs: 600000 // in milliseconds (10 minutes) <-- decrease this value if you want to test the backup feature
     })
 });
+
 
 client.on('qr', (qr) => {
     // Generate and scan this code with your phone
@@ -76,6 +69,8 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+
+    // trigger whatsapp client is started and ready
 });
 
 client.on('message', msg => {
@@ -84,6 +79,7 @@ client.on('message', msg => {
     }
 });
 
+// it will done early (so use event 'ready' listener to know when the whatsapp client is ready & started)
 client.initialize();
 ```
 

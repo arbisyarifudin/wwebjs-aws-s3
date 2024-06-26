@@ -127,7 +127,10 @@ dist
 .pnp.*
 
 # dot files
-.wwebjs_auth
-.wwebjs_cache
-*.zip
-package-lock.json
+example/*.zip
+example/.wwebjs*
+example/package-lock.json
+example/node_modules
+example/.env
+example/.env.local
+example/index.local.js

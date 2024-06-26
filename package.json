@@ -18,5 +18,8 @@
     "s3"
   ],
   "author": "arbisyarifudin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.498.0"
+  }
 }
